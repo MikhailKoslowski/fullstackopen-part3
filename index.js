@@ -57,6 +57,13 @@ app.get('/api/persons/:id', (request, response) => {
     }
 })
 
+// delete single id
+app.delete('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    persons = persons.filter(p => p.id !== id)
+    response.status(204).end()
+})
+
 // Define port to list and start listening
 const PORT = 3001
 app.listen(PORT, () => {
