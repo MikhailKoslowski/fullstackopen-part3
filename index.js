@@ -46,6 +46,28 @@ app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
 
+// add new person
+const generateId = () => {
+    let id = Math.floor(persons.length*2*Math.random())
+    while ( persons.find(p => p.id === id) ) {
+        console.log(`id ${id} already exists, generating another one..`)
+        id = Math.floor(persons.length*2*Math.random())
+    }
+    return id
+}
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+    console.log(body)
+    const person = {
+        name: body.name,
+        number: body.number,
+        id: generateId(),
+        date: new Date()
+    }
+    persons = persons.concat(person)
+    response.json(person)
+})
+
 // retrieve single id
 app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
@@ -63,6 +85,7 @@ app.delete('/api/persons/:id', (request, response) => {
     persons = persons.filter(p => p.id !== id)
     response.status(204).end()
 })
+
 
 // Define port to list and start listening
 const PORT = 3001

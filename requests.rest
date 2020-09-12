@@ -2,4 +2,13 @@
 GET http://localhost:3001/api/persons
 
 ### Delete single person
-DELETE http://localhost:3001/api/persons/1
+DELETE http://localhost:3001/api/persons/5
+
+### Add a new person
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Mikhail",
+    "number": "12345"
+}
