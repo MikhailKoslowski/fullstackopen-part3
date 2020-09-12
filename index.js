@@ -1,6 +1,11 @@
 const express = require('express')
 const app = express()
 
+const morgan = require('morgan')
+
+// use morgan logger with tiny predefined format
+app.use(morgan('tiny'))
+
 // json parser to ease data access on POST requestuests.
 app.use(express.json())
 
