@@ -29,13 +29,21 @@ let persons = [
     ]
 
 // Root
-app.get('/', (request, reponse) => {
-    reponse.send('<h1>Persons API at /api/persons</h1>')
+app.get('/', (request, response) => {
+    response.send('<h1>Persons API at /api/persons</h1>')
+})
+
+// Info
+app.get('/info', (request, response) => {
+    response.send(
+        `<p>Phonebook has info for ${persons.length} people</p>
+        <p>${new Date()}</p>`
+    )
 })
 
 // retrieve all
-app.get('/api/persons', (request, reponse) => {
-    reponse.json(persons)
+app.get('/api/persons', (request, response) => {
+    response.json(persons)
 })
 
 // Define port to list and start listening
