@@ -64,6 +64,20 @@ app.post('/api/persons', (request, response) => {
         id: generateId(),
         date: new Date()
     }
+
+    // Errors if name or number are missing.
+    if (!person.name) {
+        return response.status(400).json({error: "Name is missing"})
+    }
+    if (!person.number) {
+        return response.status(400).json({error: "Number is missing"})        
+    }
+
+    // Error if name already exists.
+    if (persons.find(p => p.name === person.name)) {
+        return response.status(400).json({error: "Name already exists"})
+    }
+
     persons = persons.concat(person)
     response.json(person)
 })
