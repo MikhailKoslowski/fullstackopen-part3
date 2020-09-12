@@ -25,6 +25,9 @@ app.use(morgan(customLogger))
 // json parser to ease data access on POST requestuests.
 app.use(express.json())
 
+// handle static pages.
+app.use(express.static('build'))
+
 // Hardcoded persons for testing purpose.
 let persons = [
         {
@@ -48,11 +51,6 @@ let persons = [
         "id": 4
         }
     ]
-
-// Root
-app.get('/', (request, response) => {
-    response.send('<h1>Persons API at /api/persons</h1>')
-})
 
 // Info
 app.get('/info', (request, response) => {
