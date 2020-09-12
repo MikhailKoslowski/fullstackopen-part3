@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 
+// Handle CORS
+const cors = require('cors')
+app.use(cors())
+
 const morgan = require('morgan')
 
 // use morgan logger with custom function
