@@ -3,8 +3,20 @@ const app = express()
 
 const morgan = require('morgan')
 
-// use morgan logger with tiny predefined format
-app.use(morgan('tiny'))
+// use morgan logger with custom function
+// sample for POST
+// POST /api/persons 200 61 - 4.869 ms {"name":"Mikhail", "number":"12345"}
+const customLogger = (tokens, request, response) => {
+    return [
+        tokens.method(request, response),
+        tokens.url(request, response),
+        tokens.status(request, response),
+        tokens.res(request, response, 'content-length'), '-',
+        tokens['response-time'](request, response), 'ms',
+        JSON.stringify(request.body)
+    ].join(' ')
+}
+app.use(morgan(customLogger))
 
 // json parser to ease data access on POST requestuests.
 app.use(express.json())
