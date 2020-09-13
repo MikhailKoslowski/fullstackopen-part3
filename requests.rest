@@ -9,8 +9,8 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Mikhail",
-    "number": "1234567"
+    "name": "a",
+    "number": "123"
 }
 
 ### get a specific person. 5f5d7e52a082ad051c56e6cc
@@ -25,5 +25,5 @@ Content-Type: application/json
 
 {
     "name": "Mikhail",
-    "number": "9865"
+    "number": "1234566789"
 }
