@@ -52,6 +52,7 @@ app.get('/api/persons', (request, response) => {
 })
 
 // add new person
+/*
 const generateId = () => {
     let id = Math.floor(persons.length*2*Math.random())
     while ( persons.find(p => p.id === id) ) {
@@ -60,15 +61,14 @@ const generateId = () => {
     }
     return id
 }
+*/
 app.post('/api/persons', (request, response) => {
     const body = request.body
     console.log(body)
-    const person = {
+    const person = Person({
         name: body.name,
         number: body.number,
-        id: generateId(),
-        date: new Date()
-    }
+    })
 
     // Errors if name or number are missing.
     if (!person.name) {
@@ -79,12 +79,15 @@ app.post('/api/persons', (request, response) => {
     }
 
     // Error if name already exists.
+    /*
     if (persons.find(p => p.name === person.name)) {
         return response.status(400).json({error: "Name already exists"})
     }
+    */
 
-    persons = persons.concat(person)
-    response.json(person)
+    person.save().then( result => {
+            response.json(person)
+    })
 })
 
 // retrieve single id
