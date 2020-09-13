@@ -14,7 +14,7 @@ Content-Type: application/json
 }
 
 ### get a specific person. 5f5d7e52a082ad051c56e6cc
-GET http://localhost:3001/api/persons/5f5d7e52a082ad051c56e6cc
+GET http://localhost:3001/api/persons/5f5d9d3a6a205d1338f4c779
 
 ### get info
 GET http://localhost:3001/info
@@ -25,5 +25,5 @@ Content-Type: application/json
 
 {
     "name": "Mikhail",
-    "number": "1234"
+    "number": "9865"
 }
