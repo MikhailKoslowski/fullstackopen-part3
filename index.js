@@ -51,17 +51,6 @@ app.get('/api/persons', (request, response) => {
     })
 })
 
-// add new person
-/*
-const generateId = () => {
-    let id = Math.floor(persons.length*2*Math.random())
-    while ( persons.find(p => p.id === id) ) {
-        console.log(`id ${id} already exists, generating another one..`)
-        id = Math.floor(persons.length*2*Math.random())
-    }
-    return id
-}
-*/
 app.post('/api/persons', (request, response) => {
     const body = request.body
     console.log(body)
@@ -93,6 +82,22 @@ app.post('/api/persons', (request, response) => {
 // retrieve single id
 app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id).then(person => {
+        if (person) {
+            response.json(person)
+        } else {
+            response.status(404).end()
+        }
+    })
+    .catch(error => next(error))
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+    const p = {
+        name: request.body.name,
+        number: request.body.number
+    }
+    Person.findByIdAndUpdate(request.params.id, p, { new: true }).then(person => {
+        console.log(person)
         if (person) {
             response.json(person)
         } else {

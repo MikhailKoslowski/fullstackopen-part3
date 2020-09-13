@@ -2,7 +2,7 @@
 GET http://localhost:3001/api/persons
 
 ### Delete single person
-DELETE http://localhost:3001/api/persons/5
+DELETE http://localhost:3001/api/persons/5f5d9cbd8111e9063c139749
 
 ### Add a new person
 POST http://localhost:3001/api/persons
@@ -18,3 +18,12 @@ GET http://localhost:3001/api/persons/5f5d7e52a082ad051c56e6cc
 
 ### get info
 GET http://localhost:3001/info
+
+### PUT
+PUT http://localhost:3001/api/persons/5f5d9d3a6a205d1338f4c779
+Content-Type: application/json
+
+{
+    "name": "Mikhail",
+    "number": "1234"
+}
