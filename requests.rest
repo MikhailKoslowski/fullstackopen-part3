@@ -12,3 +12,6 @@ Content-Type: application/json
     "name": "Mikhail",
     "number": "12345"
 }
+
+### get info
+GET http://localhost:3001/info

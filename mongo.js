@@ -35,6 +35,7 @@ if (name && number) {
 } 
 // otherwise, retrieve all entries
 else {
+
     Person.find({}).then( result => {
         console.log('phonebook:')
         result.forEach( r => {

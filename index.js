@@ -1,3 +1,7 @@
+// first load dotenv to get all envvars.
+require('dotenv').config()
+
+// load express and create app
 const express = require('express')
 const app = express()
 
@@ -5,11 +9,10 @@ const app = express()
 const cors = require('cors')
 app.use(cors())
 
-const morgan = require('morgan')
-
 // use morgan logger with custom function
 // sample for POST
 // POST /api/persons 200 61 - 4.869 ms {"name":"Mikhail", "number":"12345"}
+const morgan = require('morgan')
 const customLogger = (tokens, request, response) => {
     return [
         tokens.method(request, response),
@@ -28,41 +31,24 @@ app.use(express.json())
 // handle static pages.
 app.use(express.static('build'))
 
-// Hardcoded persons for testing purpose.
-let persons = [
-        {
-        "name": "Arto Hellas",
-        "number": "040-123456",
-        "id": 1
-        },
-        {
-        "name": "Ada Lovelace",
-        "number": "39-44-5323523",
-        "id": 2
-        },
-        {
-        "name": "Dan Abramov",
-        "number": "12-43-234345",
-        "id": 3
-        },
-        {
-        "name": "Mary Poppendieck",
-        "number": "39-23-6423122",
-        "id": 4
-        }
-    ]
+// mongoose model
+const Person = require('./models/person')
 
 // Info
 app.get('/info', (request, response) => {
-    response.send(
-        `<p>Phonebook has info for ${persons.length} people</p>
-        <p>${new Date()}</p>`
-    )
+    Person.find({}).then(persons => {
+        response.send(
+            `<p>Phonebook has info for ${persons.length} people</p>
+            <p>${new Date()}</p>`
+        )
+    })
 })
 
 // retrieve all
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 })
 
 // add new person
@@ -121,7 +107,7 @@ app.delete('/api/persons/:id', (request, response) => {
 
 
 // Define port to list and start listening
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)  
 })
