@@ -51,7 +51,7 @@ app.get('/api/persons', (request, response) => {
     })
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const body = request.body
     console.log(body)
     const person = Person({
@@ -66,17 +66,10 @@ app.post('/api/persons', (request, response) => {
     if (!person.number) {
         return response.status(400).json({error: "Number is missing"})        
     }
-
-    // Error if name already exists.
-    /*
-    if (persons.find(p => p.name === person.name)) {
-        return response.status(400).json({error: "Name already exists"})
-    }
-    */
-
     person.save().then( result => {
             response.json(person)
     })
+    .catch(error => next(error))
 })
 
 // retrieve single id
@@ -129,6 +122,9 @@ const errorHandler = (error, request, response, next) => {
     // this error can be thrown when looking up db with an incompatible id.
     if(error.name === 'CastError') {
         return response.status(400).send({error: 'malformatted id'})
+    }
+    if(error.name === 'ValidationError') {
+        return response.status(400).send({error: 'name already in db'})
     }
     next(error)
 }
