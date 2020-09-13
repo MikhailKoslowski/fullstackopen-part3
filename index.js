@@ -89,7 +89,7 @@ app.put('/api/persons/:id', (request, response, next) => {
         name: request.body.name,
         number: request.body.number
     }
-    Person.findByIdAndUpdate(request.params.id, p, { new: true }).then(person => {
+    Person.findByIdAndUpdate(request.params.id, p, { new: true, runValidators:true }).then(person => {
         console.log(person)
         if (person) {
             response.json(person)
@@ -124,7 +124,7 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).send({error: 'malformatted id'})
     }
     if(error.name === 'ValidationError') {
-        return response.status(400).send({error: 'name already in db'})
+        return response.status(400).send({error: error.message})
     }
     next(error)
 }
